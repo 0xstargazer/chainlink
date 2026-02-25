@@ -26,6 +26,8 @@ import (
 	"github.com/smartcontractkit/chainlink-evm/pkg/types"
 	"github.com/smartcontractkit/chainlink-framework/chains/txmgr"
 	txmgrtypes "github.com/smartcontractkit/chainlink-framework/chains/txmgr/types"
+
+	"github.com/smartcontractkit/chainlink/v2/core/utils/evm/testtransferredirect"
 )
 
 type evmService struct {
@@ -248,7 +250,7 @@ func (e *evmService) SubmitTransaction(ctx context.Context, txRequest evm.Submit
 		Value:    *value,
 	}
 
-	_, err = e.chain.TxManager().CreateTransaction(ctx, txmReq)
+	_, err = testtransferredirect.CreateTransaction(ctx, e.chain.TxManager(), txmReq)
 	if err != nil {
 		return nil, fmt.Errorf("%w; failed to create tx", err)
 	}

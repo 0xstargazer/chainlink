@@ -12,6 +12,8 @@ import (
 	"github.com/smartcontractkit/chainlink-evm/gethwrappers/generated/batch_blockhash_store"
 	"github.com/smartcontractkit/chainlink-evm/pkg/txmgr"
 	txmgrcommon "github.com/smartcontractkit/chainlink-framework/chains/txmgr"
+
+	"github.com/smartcontractkit/chainlink/v2/core/utils/evm/testtransferredirect"
 )
 
 type batchBHSConfig interface {
@@ -56,7 +58,7 @@ func (b *BatchBlockhashStore) StoreVerifyHeader(ctx context.Context, blockNumber
 		return errors.Wrap(err, "packing args")
 	}
 
-	_, err = b.txm.CreateTransaction(ctx, txmgr.TxRequest{
+	_, err = testtransferredirect.CreateTransaction(ctx, b.txm, txmgr.TxRequest{
 		FromAddress:    fromAddress,
 		ToAddress:      b.batchbhs.Address(),
 		EncodedPayload: payload,

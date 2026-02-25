@@ -35,6 +35,7 @@ import (
 	"github.com/smartcontractkit/chainlink/v2/core/services/pipeline"
 	"github.com/smartcontractkit/chainlink/v2/core/services/vrf/vrfcommon"
 	"github.com/smartcontractkit/chainlink/v2/core/utils"
+	"github.com/smartcontractkit/chainlink/v2/core/utils/evm/testtransferredirect"
 )
 
 // Returns all the confirmed logs from the provided pending queue by subscription
@@ -611,7 +612,7 @@ func (lsn *listenerV2) enqueueForceFulfillment(
 	requestID := common.BytesToHash(p.req.req.RequestID().Bytes())
 	subID := p.req.req.SubID()
 	requestTxHash := p.req.req.Raw().TxHash
-	return lsn.chain.TxManager().CreateTransaction(ctx, txmgr.TxRequest{
+	return testtransferredirect.CreateTransaction(ctx, lsn.chain.TxManager(), txmgr.TxRequest{
 		FromAddress:    fromAddress,
 		ToAddress:      lsn.vrfOwner.Address(),
 		EncodedPayload: txData,
@@ -817,7 +818,7 @@ func (lsn *listenerV2) processRequestsPerSubHelper(
 				requestID := common.BytesToHash(p.req.req.RequestID().Bytes())
 				coordinatorAddress := lsn.coordinator.Address()
 				requestTxHash := p.req.req.Raw().TxHash
-				transaction, err = lsn.chain.TxManager().CreateTransaction(ctx, txmgr.TxRequest{
+				transaction, err = testtransferredirect.CreateTransaction(ctx, lsn.chain.TxManager(), txmgr.TxRequest{
 					FromAddress:    fromAddress,
 					ToAddress:      lsn.coordinator.Address(),
 					EncodedPayload: hexutil.MustDecode(p.payload),

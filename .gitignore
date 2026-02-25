@@ -22,12 +22,10 @@ tools/clroot/db.sqlite3-wal
 # misc
 .DS_Store
 .envrc
-.env*
 .dbenv
 !.github/actions/setup-postgres/.env
 .direnv
 .idea
-.vscode/
 *.iml
 debug.env
 operator_ui/install
@@ -127,3 +125,8 @@ core/scripts/cre/environment/logs/
 core/scripts/cre/environment/cron
 core/scripts/cre/environment/binaries/*
 *.br.b64
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore
+config.bat

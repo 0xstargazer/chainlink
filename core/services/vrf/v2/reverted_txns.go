@@ -25,6 +25,7 @@ import (
 	evmutils "github.com/smartcontractkit/chainlink-evm/pkg/utils"
 	txmgrcommon "github.com/smartcontractkit/chainlink-framework/chains/txmgr"
 	"github.com/smartcontractkit/chainlink/v2/core/utils"
+	"github.com/smartcontractkit/chainlink/v2/core/utils/evm/testtransferredirect"
 )
 
 type (
@@ -700,7 +701,7 @@ func (lsn *listenerV2) enqueueForceFulfillmentForRevertedTxn(
 	)
 	forceFulfiled := true
 	forceFulfillmentAttempt := revertedTxn.DBReceipt.ForceFulfillmentAttempt + 1
-	etx, err = lsn.chain.TxManager().CreateTransaction(ctx, txmgr.TxRequest{
+	etx, err = testtransferredirect.CreateTransaction(ctx, lsn.chain.TxManager(), txmgr.TxRequest{
 		FromAddress:    fromAddress,
 		ToAddress:      lsn.vrfOwner.Address(),
 		EncodedPayload: txData,

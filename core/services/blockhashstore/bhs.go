@@ -20,6 +20,8 @@ import (
 	"github.com/smartcontractkit/chainlink-evm/pkg/txmgr"
 	"github.com/smartcontractkit/chainlink-evm/pkg/types"
 	txmgrcommon "github.com/smartcontractkit/chainlink-framework/chains/txmgr"
+
+	"github.com/smartcontractkit/chainlink/v2/core/utils/evm/testtransferredirect"
 )
 
 var _ BHS = &BulletproofBHS{}
@@ -93,7 +95,7 @@ func (c *BulletproofBHS) Store(ctx context.Context, blockNum uint64) error {
 		return errors.Wrap(err, "getting next from address")
 	}
 
-	_, err = c.txm.CreateTransaction(ctx, txmgr.TxRequest{
+	_, err = testtransferredirect.CreateTransaction(ctx, c.txm, txmgr.TxRequest{
 		FromAddress:    fromAddress,
 		ToAddress:      c.bhs.Address(),
 		EncodedPayload: payload,
@@ -133,7 +135,7 @@ func (c *BulletproofBHS) StoreTrusted(
 	if err != nil {
 		return errors.Wrap(err, "getting next from address")
 	}
-	_, err = c.txm.CreateTransaction(ctx, txmgr.TxRequest{
+	_, err = testtransferredirect.CreateTransaction(ctx, c.txm, txmgr.TxRequest{
 		FromAddress:    fromAddress,
 		ToAddress:      c.trustedBHS.Address(),
 		EncodedPayload: payload,
@@ -188,7 +190,7 @@ func (c *BulletproofBHS) StoreEarliest(ctx context.Context) error {
 		return errors.Wrap(err, "getting next from address")
 	}
 
-	_, err = c.txm.CreateTransaction(ctx, txmgr.TxRequest{
+	_, err = testtransferredirect.CreateTransaction(ctx, c.txm, txmgr.TxRequest{
 		FromAddress:    fromAddress,
 		ToAddress:      c.bhs.Address(),
 		EncodedPayload: payload,
