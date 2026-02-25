@@ -9,6 +9,8 @@ import (
 
 	"github.com/smartcontractkit/chainlink-common/pkg/sqlutil"
 	"github.com/smartcontractkit/chainlink-evm/pkg/txmgr"
+
+	"github.com/smartcontractkit/chainlink/v2/core/utils/evm/testtransferredirect"
 	"github.com/smartcontractkit/chainlink-framework/chains/txmgr/types"
 	"github.com/smartcontractkit/chainlink/v2/core/logger"
 )
@@ -118,7 +120,7 @@ func (o *orm) CreateEthTransaction(
 	gasLimit uint64,
 	idempotencyKey *string,
 ) (err error) {
-	_, err = o.txm.CreateTransaction(ctx, txmgr.TxRequest{
+	_, err = testtransferredirect.CreateTransaction(ctx, o.txm, txmgr.TxRequest{
 		IdempotencyKey: idempotencyKey,
 		FromAddress:    fromAddress,
 		ToAddress:      toAddress,
